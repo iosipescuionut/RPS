@@ -1,23 +1,6 @@
 import styled from "styled-components";
-import {
-  FaRegHandScissors,
-  FaRegHandRock,
-  FaRegHandPaper,
-} from "react-icons/fa";
-
-const iconStyles = `
-  color: var(--text);
-`;
-
-export const CustomScissorsIcon = styled(FaRegHandScissors)`
-  ${iconStyles}
-`;
-export const CustomRockIcon = styled(FaRegHandRock)`
-  ${iconStyles}
-`;
-export const CustomPaperIcon = styled(FaRegHandPaper)`
-  ${iconStyles}
-`;
+import { WeaponItem } from "../Weapon/Weapons.style";
+import { weapon } from "../Weapon/Weapons.style";
 
 export const Results = styled.div`
   color: var(--gray);
@@ -42,6 +25,12 @@ export const Results = styled.div`
   }
 `;
 
+export const WeaponGame = styled.div`
+  ${weapon}
+  display: flex;
+  flex-direction: column;
+`;
+
 //
 export const GridFlow = styled.div`
   display: grid;
@@ -53,6 +42,7 @@ export const GridFlow = styled.div`
 export const GameAreaTitle = styled.h1`
   font-weight: var(--fw-bold);
   font-size: var(--fs-600);
+  min-height: 32px;
 `;
 
 export const CircleElement = styled.p`
@@ -92,24 +82,23 @@ export const BattleContainer = styled.div`
 `;
 
 export const PlayerBox = styled.div`
-  width: 20%;
+  width: 100%;
   font-size: 35px;
+  margin-bottom: 20px;
 `;
 
-export const Weapon = styled.div`
-  height: 125px;
-  width: 125px;
-  font-size: 50px;
-  color: var(--text);
-  background-color: var(--gray-light);
+export const PlayerContainer = styled.div`
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  border-radius: 20px;
+  text-align: center;
 `;
 
-export const WeaposContainer = styled.div`
-  display: flex;
-  padding: var(--padding);
-  gap: 3rem;
+export const WeaponLabel = styled.span`
+  font-size: 20px;
+  margin-top: 15px;
+`;
+
+export const ScorePlate = styled.div`
+  margin-top: 20px;
 `;

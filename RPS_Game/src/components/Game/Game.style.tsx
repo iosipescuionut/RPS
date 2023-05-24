@@ -4,6 +4,7 @@ import styled from "styled-components";
 export const GameContainer = styled.div`
   max-width: 60rem;
   display: grid;
+  min-height: 689px;
 
   @media (min-width: 600px) {
     margin-inline: 1rem;

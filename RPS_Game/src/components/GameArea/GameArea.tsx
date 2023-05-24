@@ -1,46 +1,121 @@
+import React, { useState, useEffect, useContext } from "react";
 import {
   GameAreaTitle,
   CircleElement,
-  ResultRank,
-  GridFlow,
   Results,
   BattleContainer,
   PlayerBox,
-  Weapon,
-  WeaposContainer,
-  CustomPaperIcon,
-  CustomRockIcon,
-  CustomScissorsIcon,
+  PlayerContainer,
+  WeaponLabel,
+  ScorePlate,
+  WeaponGame,
 } from "./GameArea.style";
 import { ScoreButton } from "../ScoreArea/ScoreArea.style";
+import Weapons from "../Weapon/Weapon";
+import { GameContext } from "../contexts/GameContext";
+import { getResult, getWinner } from "./getResult";
+import CustomIcon from "../Weapon/CustomIcon";
+import { Loader } from "../Loader/Loader.style";
+
+export type GameResult = "win" | "lose" | "draw" | "";
+export type GameWeapons = "rock" | "paper" | "scissors" | "";
 
 function GameArea() {
+  const { state, setUser } = useContext(GameContext);
+  const [userChoice, setUserChoice] = useState<GameWeapons>("");
+  const [computerChoice, setComputerChoice] = useState<GameWeapons>("");
+  const [result, setResult] = useState<GameResult>("");
+  const [winner, setWinner] = useState<string>("");
+  const [timer, seTimer] = useState(3);
+  const [runTimer, setRunTimer] = useState(false);
+  const [armed, setArmed] = useState(false);
+
+  const {
+    currentUser: { win, lose },
+  } = state;
+
+  const handleClick = (value: GameWeapons) => {
+    console.log(value);
+    setArmed(false);
+    setWinner("");
+    setUserChoice(value);
+    generateComputerChoice();
+  };
+
+  const generateComputerChoice = () => {
+    const randomChoice = choices[Math.floor(Math.random() * choices.length)];
+    console.log(randomChoice);
+    setComputerChoice(randomChoice);
+  };
+
+  const choices: GameWeapons[] = ["rock", "paper", "scissors"];
+
+  useEffect(() => {
+    if (runTimer && timer > 0) {
+      setTimeout(() => {
+        seTimer(timer - 1);
+      }, 1000);
+    } else if (runTimer && timer < 1) {
+      console.log(userChoice, computerChoice);
+      setUser(getResult(userChoice, computerChoice));
+      setResult(getResult(userChoice, computerChoice));
+      setRunTimer(false);
+      seTimer(3);
+      setArmed(true);
+      console.log("Stop Timer");
+    }
+    console.log(timer);
+  }, [runTimer, timer]);
+
+  useEffect(() => {
+    setWinner(getWinner(result));
+    console.log("Here are te results", result);
+  }, [result]);
+
+  const handleScores = () => {
+    console.log("Start Timer");
+    setRunTimer(true);
+    console.log(timer);
+  };
+
   return (
     <Results data-spacing="large">
-      {/* <GameAreaTitle>Your Result</GameAreaTitle> */}
+      <GameAreaTitle>{!runTimer ? winner : ""}</GameAreaTitle>
       <BattleContainer>
-        <PlayerBox>User</PlayerBox>
+        <PlayerContainer>
+          <PlayerBox>User</PlayerBox>
+          <WeaponGame>
+            {runTimer ? (
+              <Loader />
+            ) : (
+              <CustomIcon choice={armed ? userChoice : ""} />
+            )}
+            <WeaponLabel>{armed ? userChoice : ""}</WeaponLabel>
+          </WeaponGame>
+          <ScorePlate>Score: {win}</ScorePlate>
+        </PlayerContainer>
         <CircleElement>
-          <span>VS</span>
+          <span>{!runTimer ? "VS" : `${timer}`}</span>
         </CircleElement>
-        <PlayerBox>Bot</PlayerBox>
+        <PlayerContainer>
+          <PlayerBox>Bot</PlayerBox>
+          <WeaponGame>
+            {runTimer ? (
+              <Loader />
+            ) : (
+              <CustomIcon choice={armed ? computerChoice : ""} />
+            )}
+            <WeaponLabel>{armed ? computerChoice : ""}</WeaponLabel>
+          </WeaponGame>
+          <ScorePlate>Score: {lose}</ScorePlate>
+        </PlayerContainer>
       </BattleContainer>
-      <WeaposContainer>
-        {/* <ResultRank>Great</ResultRank> */}
-        {/* <p>
-          You scored higher than 65% of the people who have taken these tests.
-        </p> */}
-        <Weapon>
-          <CustomPaperIcon />
-        </Weapon>
-        <Weapon>
-          <CustomRockIcon />
-        </Weapon>
-        <Weapon>
-          <CustomScissorsIcon />
-        </Weapon>
-      </WeaposContainer>
-      <ScoreButton>Start Game</ScoreButton>
+      <Weapons
+        choices={choices}
+        handleClick={handleClick}
+        userChoice={userChoice}
+      />
+      <ScoreButton onClick={handleScores}>Start Game</ScoreButton>
     </Results>
   );
 }
