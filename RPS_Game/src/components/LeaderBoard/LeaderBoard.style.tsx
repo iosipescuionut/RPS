@@ -3,6 +3,7 @@ import { ListItem, ListTitle, FlexGroup } from "../ScoreItem/ScoreItem.style";
 
 type LeaderType = {
   index: number;
+  isCurrentUser: boolean;
 };
 
 export const LeaderBoardContainer = styled.div`
@@ -11,13 +12,17 @@ export const LeaderBoardContainer = styled.div`
 
 export const LeaderItem = styled.div<LeaderType>`
   margin-bottom: 10px;
-  background-color: ${({ index }) =>
-    index % 2 === 0 ? "var(--purple-extra-light)" : "var(--brown-light)"};
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 1rem;
   border-radius: 0.5rem;
+  background-color: ${({ isCurrentUser, index }) =>
+    isCurrentUser
+      ? "var(--blue-extra-light)"
+      : index % 2 === 0
+      ? "var(--purple-extra-light)"
+      : "var(--brown-light)"};
   svg {
     stroke: ${({ index }) =>
       index % 2 === 0 ? "var(--purple-light)" : "var(--yellow)"};
@@ -25,8 +30,12 @@ export const LeaderItem = styled.div<LeaderType>`
 `;
 
 export const LeaderTitle = styled.div<LeaderType>`
-  color: ${({ index }) =>
-    index % 2 === 0 ? "var(--purple-light)" : "var(--yellow)"};
+  color: ${({ isCurrentUser, index }) =>
+    isCurrentUser
+      ? "var(--blue)"
+      : index % 2 === 0
+      ? "var(--purple-light)"
+      : "var(--yellow)"};
   font-weight: var(--fw-bold);
 `;
 

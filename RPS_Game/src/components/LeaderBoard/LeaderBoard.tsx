@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { ScoreTitle } from "../ScoreArea/ScoreArea.style";
 import { GameContext } from "../contexts/GameContext";
 import { LeaderBoardContainer } from "./LeaderBoard.style";
@@ -18,14 +18,26 @@ import {
 const LeaderBoard = () => {
   const { state } = useContext(GameContext);
   const { players, currentUser } = state;
+
+  const sortedPlayers = [...players].sort((a, b) => b.win - a.win);
+
   return (
     <LeaderBoardContainer>
       <ScoreTitle>Leader Board</ScoreTitle>
       <ListContainer>
         <ListContainerBox>
-          {players.map((el) => (
-            <LeaderItem key={el.id} index={el.id}>
-              <LeaderTitle index={el.id}>{el.user}</LeaderTitle>
+          {sortedPlayers.map((el) => (
+            <LeaderItem
+              key={el.id}
+              index={el.id}
+              isCurrentUser={currentUser.id === el.id}
+            >
+              <LeaderTitle
+                index={el.id}
+                isCurrentUser={currentUser.id === el.id}
+              >
+                {el.user}
+              </LeaderTitle>
               <PlayerTotalScore>{el.win}</PlayerTotalScore>
             </LeaderItem>
           ))}
