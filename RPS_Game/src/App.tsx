@@ -1,11 +1,14 @@
 import "./App.css";
 import Game from "./components/Game/Game";
 import { GameProvider } from "./components/contexts/GameContext";
+import Modal from "./components/Modal/Modal";
+import { useEffect, useState } from "react";
 
 function App() {
+  const [showModal, setShowModal] = useState<boolean>(true);
   return (
     <GameProvider>
-      <Game />
+      {showModal ? <Modal setShowModal={setShowModal} /> : <Game />}
     </GameProvider>
   );
 }

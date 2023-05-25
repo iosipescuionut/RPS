@@ -50,8 +50,9 @@
   --blue-light: #54c5eb88;
   --blue-dark: #116480;
   --yellow: #ffb74a;
+  --brown-light: #fce9c0;
   --gold: #f1e044;
-  --yellow-light: #ffb74a8e;
+  --yellow-light: #f3cc92;
   --yellow-dark: #996517;
   --green-dark: #007c67;
   --green: #04b99b;
@@ -89,6 +90,20 @@
   --border-radius: 2rem;
 }
 
+html {
+  overflow: scroll;
+  overflow-x: hidden;
+}
+::-webkit-scrollbar {
+  /* width: 0;    */
+  width: 5px;  
+  background: transparent;  
+}
+::-webkit-scrollbar-thumb {
+  background: var(--blue);
+}
+/* overflow-y: hidden; */
+
 *,
 *::before,
 *::after {
@@ -115,7 +130,10 @@ body {
 @media (min-width: 600px) {
   body {
     min-height: 100vh;
-    display: grid;
-    place-items: center;
+    /* display: grid; */
+    /* place-items: center; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 }

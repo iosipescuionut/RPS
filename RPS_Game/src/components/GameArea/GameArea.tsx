@@ -21,7 +21,7 @@ export type GameResult = "win" | "lose" | "draw" | "";
 export type GameWeapons = "rock" | "paper" | "scissors" | "";
 
 function GameArea() {
-  const { state, setUser } = useContext(GameContext);
+  const { state, setUpdateUser } = useContext(GameContext);
   const [userChoice, setUserChoice] = useState<GameWeapons>("");
   const [computerChoice, setComputerChoice] = useState<GameWeapons>("");
   const [result, setResult] = useState<GameResult>("");
@@ -31,59 +31,66 @@ function GameArea() {
   const [armed, setArmed] = useState(false);
 
   const {
-    currentUser: { win, lose },
+    currentUser: { win, lose, user },
   } = state;
 
+  // timer
+  const handleScores = () => {
+    setRunTimer(true);
+    generateComputerChoice();
+  };
+
+  // User Choice
   const handleClick = (value: GameWeapons) => {
     console.log(value);
     setArmed(false);
     setWinner("");
     setUserChoice(value);
-    generateComputerChoice();
   };
 
+  // Computer Choice
   const generateComputerChoice = () => {
     const randomChoice = choices[Math.floor(Math.random() * choices.length)];
     console.log(randomChoice);
     setComputerChoice(randomChoice);
   };
 
+  // Final Desition
+  const handleResults = () => {
+    const resultGame = getResult(userChoice, computerChoice);
+    setUpdateUser(resultGame);
+    setResult(resultGame);
+    setRunTimer(false);
+    seTimer(3);
+    setArmed(true);
+  };
+
   const choices: GameWeapons[] = ["rock", "paper", "scissors"];
 
+  // Timer 3 -> 0 run handleResults() will generate result
   useEffect(() => {
     if (runTimer && timer > 0) {
       setTimeout(() => {
         seTimer(timer - 1);
       }, 1000);
     } else if (runTimer && timer < 1) {
-      console.log(userChoice, computerChoice);
-      setUser(getResult(userChoice, computerChoice));
-      setResult(getResult(userChoice, computerChoice));
-      setRunTimer(false);
-      seTimer(3);
-      setArmed(true);
-      console.log("Stop Timer");
+      handleResults();
     }
-    console.log(timer);
   }, [runTimer, timer]);
 
+  // After updating result set the winner and update localStorage
   useEffect(() => {
-    setWinner(getWinner(result));
-    console.log("Here are te results", result);
-  }, [result]);
-
-  const handleScores = () => {
-    console.log("Start Timer");
-    setRunTimer(true);
-    console.log(timer);
-  };
+    setWinner(getWinner(result, user));
+    localStorage.setItem("state", JSON.stringify(state));
+  }, [result, state]);
 
   return (
     <Results data-spacing="large">
       <GameAreaTitle>{!runTimer ? winner : ""}</GameAreaTitle>
       <BattleContainer>
+        {/* Reminder | De mutat intr-o comp separata PlayerContainer*/}
         <PlayerContainer>
-          <PlayerBox>User</PlayerBox>
+          <PlayerBox>{user}</PlayerBox>
           <WeaponGame>
             {runTimer ? (
               <Loader />
@@ -97,6 +104,7 @@ function GameArea() {
         <CircleElement>
           <span>{!runTimer ? "VS" : `${timer}`}</span>
         </CircleElement>
+        {/* Reminder | De mutat intr-o comp separata PlayerContainer*/}
         <PlayerContainer>
           <PlayerBox>Bot</PlayerBox>
           <WeaponGame>

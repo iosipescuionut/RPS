@@ -23,7 +23,8 @@ type AuxProps = {
 
 export type AppContextType = {
   state: InitialType;
-  setUser: (result: GameResult) => void;
+  setUpdateUser: (result: GameResult) => void;
+  setUser: (name: string, players: UserType[]) => void;
 };
 
 const initialState: InitialType = {
@@ -38,37 +39,92 @@ const initialState: InitialType = {
   },
 };
 
-const setUpdateUser = (result: GameResult, state: InitialType): UserType => {
-  const { currentUser } = state;
-  if (!result) return currentUser;
-  return { ...currentUser, [result]: currentUser[result] + 1 };
-  // switch (result) {
-  //   case "win":
-  //     return { ...currentUser, win: currentUser.win + 1 };
-  //   case "lose":
-  //     return { ...currentUser, lose: currentUser.lose + 1 };
-  //   case "draw":
-  //     return { ...currentUser, draw: currentUser.draw + 1 };
-  //   default:
-  //     return currentUser;
-  // }
+const setUpdateScore = (
+  result: GameResult,
+  state: InitialType
+): InitialType => {
+  const { currentUser, players } = state;
+  if (!result) return state;
+
+  const updateUser: UserType = {
+    ...currentUser,
+    [result]: currentUser[result] + 1,
+    total: currentUser.total + 1,
+  };
+
+  const updateArr: UserType[] = players.map((el) =>
+    el.id === currentUser.id ? { ...updateUser } : el
+  );
+
+  return {
+    players: updateArr,
+    currentUser: updateUser,
+  };
+};
+
+const setAuthUser = (name: string, players: UserType[]) => {
+  console.log(players);
+  if (!players) {
+    const newUser: UserType = {
+      id: 1,
+      user: name,
+      win: 0,
+      lose: 0,
+      draw: 0,
+      total: 0,
+    };
+
+    return {
+      players: [newUser],
+      currentUser: newUser,
+    };
+  }
+
+  const findUser = players?.find((el) => el.user === name);
+
+  if (!findUser) {
+    const newUser: UserType = {
+      id: players?.length + 1,
+      user: name,
+      win: 0,
+      lose: 0,
+      draw: 0,
+      total: 0,
+    };
+
+    return {
+      players: [...players, newUser],
+      currentUser: newUser,
+    };
+  } else {
+    return {
+      players,
+      currentUser: findUser,
+    };
+  }
 };
 
 export const GameContext = createContext<AppContextType>({
   state: initialState,
+  setUpdateUser: () => {},
   setUser: () => {},
 });
 
 export const GameProvider: FC<AuxProps> = ({ children }: AuxProps) => {
   const [state, setState] = useState<InitialType>(initialState);
 
-  const setUser = (result: GameResult) => {
-    const updateUser = setUpdateUser(result, state);
-    setState({ ...state, currentUser: updateUser });
+  const setUpdateUser = (result: GameResult) => {
+    const { players, currentUser } = setUpdateScore(result, state);
+    setState({ ...state, currentUser: currentUser, players: players });
+  };
+
+  const setUser = (name: string, playersData: UserType[]) => {
+    const { players, currentUser } = setAuthUser(name, playersData);
+    setState({ ...state, currentUser: currentUser, players: players });
   };
 
   return (
-    <GameContext.Provider value={{ state, setUser }}>
+    <GameContext.Provider value={{ state, setUpdateUser, setUser }}>
       {children}
     </GameContext.Provider>
   );

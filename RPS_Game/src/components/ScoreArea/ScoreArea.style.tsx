@@ -3,6 +3,7 @@ import styled from "styled-components";
 export const ScoreTitle = styled.h2`
   font-size: var(--fs-600);
   font-weight: var(--fw-bold);
+  margin-bottom: 15px;
 `;
 
 export const ScoreButton = styled.button`

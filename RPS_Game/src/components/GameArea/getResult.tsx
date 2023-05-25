@@ -22,11 +22,11 @@ export const getResult = (
   }
 };
 
-export const getWinner = (result: GameResult): string => {
+export const getWinner = (result: GameResult, user: string): string => {
   if (!result) return "";
   switch (result) {
     case "win":
-      return "User Win the Game! 🎉";
+      return `${user} Win the Game! 🎉`;
     case "lose":
       return "Computer Win the Game! ❌";
     case "draw":

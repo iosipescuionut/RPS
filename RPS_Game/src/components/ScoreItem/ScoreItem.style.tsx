@@ -2,9 +2,10 @@ import styled from "styled-components";
 import { BsTrophy } from "react-icons/bs";
 import { RiEmotionSadLine } from "react-icons/ri";
 import { FaRegHandshake } from "react-icons/fa";
+import { FaRegFlag } from "react-icons/fa";
 
 type StyleProps = {
-  result?: "win" | "lose" | "draw";
+  result?: "win" | "lose" | "draw" | "total";
 };
 
 export const TrophyIcon = styled(BsTrophy)`
@@ -15,6 +16,9 @@ export const SadFaceIcon = styled(RiEmotionSadLine)`
 `;
 export const HandsShakeIcon = styled(FaRegHandshake)`
   color: var(--purple-light);
+`;
+export const FlagIcon = styled(FaRegFlag)`
+  color: var(--yellow);
 `;
 
 export const ListItem = styled.div<StyleProps>`
@@ -31,6 +35,8 @@ export const ListItem = styled.div<StyleProps>`
         return "var(--red-ligth)";
       case "draw":
         return "var(--purple-extra-light)";
+      case "total":
+        return "var(--brown-light)";
       default:
         return "var(--purple-extra-light)";
     }
@@ -44,6 +50,8 @@ export const ListItem = styled.div<StyleProps>`
           return "var(--red)";
         case "draw":
           return "var(--purple-light)";
+        case "total":
+          return "var(--yellow)";
         default:
           return "var(--purple-light)";
       }
@@ -67,6 +75,8 @@ export const ListTitle = styled.h3<StyleProps>`
         return "var(--red)";
       case "draw":
         return "var(--purple-light)";
+      case "total":
+        return "var(--yellow)";
       default:
         return "var(--purple-light)";
     }
@@ -88,6 +98,8 @@ export const ListContainer = styled.div`
   align-content: start;
   gap: 1rem;
   /* we will update max-height value based on the final GameArea Component */
-  max-height: 800px;
-  overflow: scroll;
+  max-height: 300px;
+  overflow-x: scroll;
 `;
+
+export const ListContainerBox = styled.div``;
