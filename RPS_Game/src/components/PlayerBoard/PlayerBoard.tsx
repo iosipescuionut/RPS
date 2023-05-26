@@ -7,13 +7,14 @@ import {
   SadFaceIcon,
   HandsShakeIcon,
   FlagIcon,
-} from "../ScoreItem/ScoreItem.style";
+} from "../ScoreArea/ScoreArea.style";
 import { PlayerBoardContainer } from "./PlayerBoard.style";
 import { GameContext } from "../contexts/GameContext";
 import { ScoreTitle } from "../ScoreArea/ScoreArea.style";
+import { AppContextType } from "../contexts/GameContext";
 
 const PlayerBoard = () => {
-  const { state } = useContext(GameContext);
+  const { state } = useContext<AppContextType>(GameContext);
   const {
     currentUser: { win, lose, draw, total },
   } = state;

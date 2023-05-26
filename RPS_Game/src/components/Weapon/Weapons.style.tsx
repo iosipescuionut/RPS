@@ -5,7 +5,6 @@ import {
   FaRegHandPaper,
   FaQuestion,
 } from "react-icons/fa";
-// import { GameWeapons } from "../GameArea/GameArea";
 
 type SelectedWeapon = {
   selected: string;

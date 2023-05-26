@@ -1,22 +1,13 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import { ScoreTitle } from "../ScoreArea/ScoreArea.style";
 import { GameContext } from "../contexts/GameContext";
 import { LeaderBoardContainer } from "./LeaderBoard.style";
-import {
-  ListItem,
-  ListTitle,
-  ListContainer,
-  ListContainerBox,
-} from "../ScoreItem/ScoreItem.style";
-import {
-  LeaderItem,
-  LeaderGroup,
-  LeaderTitle,
-  PlayerTotalScore,
-} from "./LeaderBoard.style";
+import { ListContainer, ListContainerBox } from "../ScoreArea/ScoreArea.style";
+import { LeaderItem, LeaderTitle, PlayerTotalScore } from "./LeaderBoard.style";
+import { AppContextType } from "../contexts/GameContext";
 
 const LeaderBoard = () => {
-  const { state } = useContext(GameContext);
+  const { state } = useContext<AppContextType>(GameContext);
   const { players, currentUser } = state;
 
   const sortedPlayers = [...players].sort((a, b) => b.win - a.win);

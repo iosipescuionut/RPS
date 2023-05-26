@@ -16,19 +16,26 @@ import { GameContext } from "../contexts/GameContext";
 import { getResult, getWinner } from "./getResult";
 import CustomIcon from "../Weapon/CustomIcon";
 import { Loader } from "../Loader/Loader.style";
+import { AppContextType } from "../contexts/GameContext";
 
 export type GameResult = "win" | "lose" | "draw" | "";
 export type GameWeapons = "rock" | "paper" | "scissors" | "";
+export type WeaponsType = {
+  choices: GameWeapons[];
+  handleClick: (arg: GameWeapons) => void;
+  userChoice: GameWeapons;
+};
 
 function GameArea() {
-  const { state, setUpdateUser } = useContext(GameContext);
+  const { state, setUpdateUser } = useContext<AppContextType>(GameContext);
   const [userChoice, setUserChoice] = useState<GameWeapons>("");
   const [computerChoice, setComputerChoice] = useState<GameWeapons>("");
   const [result, setResult] = useState<GameResult>("");
   const [winner, setWinner] = useState<string>("");
-  const [timer, seTimer] = useState(3);
-  const [runTimer, setRunTimer] = useState(false);
-  const [armed, setArmed] = useState(false);
+  const [timer, seTimer] = useState<number>(3);
+  const [runTimer, setRunTimer] = useState<boolean>(false);
+  const [armed, setArmed] = useState<boolean>(false);
+  const choices: GameWeapons[] = ["rock", "paper", "scissors"];
 
   const {
     currentUser: { win, lose, user },
@@ -42,7 +49,6 @@ function GameArea() {
 
   // User Choice
   const handleClick = (value: GameWeapons) => {
-    console.log(value);
     setArmed(false);
     setWinner("");
     setUserChoice(value);
@@ -51,7 +57,6 @@ function GameArea() {
   // Computer Choice
   const generateComputerChoice = () => {
     const randomChoice = choices[Math.floor(Math.random() * choices.length)];
-    console.log(randomChoice);
     setComputerChoice(randomChoice);
   };
 
@@ -64,8 +69,6 @@ function GameArea() {
     seTimer(3);
     setArmed(true);
   };
-
-  const choices: GameWeapons[] = ["rock", "paper", "scissors"];
 
   // Timer 3 -> 0 run handleResults() will generate result
   useEffect(() => {

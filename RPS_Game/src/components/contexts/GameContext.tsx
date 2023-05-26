@@ -1,6 +1,5 @@
-import React, { ReactNode, createContext, useState } from "react";
+import React, { createContext, useState } from "react";
 import { FC } from "react";
-import { ButtonHTMLAttributes } from "react";
 import { GameResult } from "../GameArea/GameArea";
 
 type UserType = {
@@ -62,7 +61,7 @@ const setUpdateScore = (
   };
 };
 
-const setAuthUser = (name: string, players: UserType[]) => {
+const setAuthUser = (name: string, players: UserType[]): InitialType => {
   console.log(players);
   if (!players) {
     const newUser: UserType = {

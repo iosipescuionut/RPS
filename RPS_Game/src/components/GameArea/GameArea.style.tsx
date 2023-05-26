@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { WeaponItem } from "../Weapon/Weapons.style";
 import { weapon } from "../Weapon/Weapons.style";
 
 export const Results = styled.div`
@@ -13,11 +12,8 @@ export const Results = styled.div`
     rgba(120, 87, 255, 1) 100%
   );
   border-radius: 0 0 var(--border-radius) var(--border-radius);
-
-  /*grid flow */
   display: grid;
   align-content: start;
-  /* if condition - throw props 1 - 2 if large prop is passed*/
   gap: 2rem;
 
   @media (min-width: 600px) {

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { ListItem, ListTitle, FlexGroup } from "../ScoreItem/ScoreItem.style";
+import { FlexGroup } from "../ScoreArea/ScoreArea.style";
 
 type LeaderType = {
   index: number;

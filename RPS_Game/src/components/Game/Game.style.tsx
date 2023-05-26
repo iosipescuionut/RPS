@@ -1,5 +1,4 @@
 import styled from "styled-components";
-// import { device } from "../../utils/breakpoints/breakpoints";
 
 export const GameContainer = styled.div`
   max-width: 60rem;

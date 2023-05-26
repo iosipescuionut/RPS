@@ -1,14 +1,14 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { WeaposContainer, WeaponItem } from "./Weapons.style";
 import CustomIcon from "./CustomIcon";
+import { WeaponsType } from "../GameArea/GameArea";
+import { GameWeapons } from "../GameArea/GameArea";
 
-const Weapons = ({ ...props }) => {
-  const { choices, handleClick, userChoice } = props;
-
+const Weapons = ({ choices, handleClick, userChoice }: WeaponsType) => {
   return (
     <>
       <WeaposContainer>
-        {choices.map((choice: string, index: number) => (
+        {choices.map((choice: GameWeapons, index: number) => (
           <WeaponItem
             key={index}
             onClick={() => handleClick(choice)}

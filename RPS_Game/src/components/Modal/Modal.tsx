@@ -14,9 +14,10 @@ import {
   ModalButton,
 } from "./Modal.style";
 import { GameContext } from "../contexts/GameContext";
+import { AppContextType } from "../contexts/GameContext";
 
 type ModalProps = {
-  setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
+  setShowModal: (arg: boolean) => void;
 };
 
 type PlayerName = {
@@ -28,7 +29,7 @@ const PlayerObj = {
 };
 
 const Modal: React.FC<ModalProps> = ({ setShowModal }) => {
-  const { setUser } = useContext(GameContext);
+  const { setUser } = useContext<AppContextType>(GameContext);
   const [userName, setUserName] = useState<PlayerName>(PlayerObj);
   const { name } = userName;
 
@@ -44,14 +45,6 @@ const Modal: React.FC<ModalProps> = ({ setShowModal }) => {
     const { name, value } = e.target;
     setUserName({ ...userName, [name]: value });
   };
-
-  // const handlePlayers = () => {
-  //   // setPlayers(players)
-  // };
-
-  // useEffect(() => {
-  //   handlePlayers();
-  // }, []);
 
   return (
     <ModalWrapper>
