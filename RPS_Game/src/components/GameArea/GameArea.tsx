@@ -10,7 +10,7 @@ import {
   ScorePlate,
   WeaponGame,
 } from "./GameArea.style";
-import { ScoreButton } from "../ScoreArea/ScoreArea.style";
+import ScoreButton from "./ScoreButton";
 import Weapons from "../Weapon/Weapon";
 import { GameContext } from "../contexts/GameContext";
 import { getResult, getWinner } from "./getResult";
@@ -91,7 +91,6 @@ function GameArea() {
     <Results data-spacing="large">
       <GameAreaTitle>{!runTimer ? winner : ""}</GameAreaTitle>
       <BattleContainer>
-        {/* Reminder | De mutat intr-o comp separata PlayerContainer*/}
         <PlayerContainer>
           <PlayerBox>{user}</PlayerBox>
           <WeaponGame>
@@ -107,7 +106,6 @@ function GameArea() {
         <CircleElement>
           <span>{!runTimer ? "VS" : `${timer}`}</span>
         </CircleElement>
-        {/* Reminder | De mutat intr-o comp separata PlayerContainer*/}
         <PlayerContainer>
           <PlayerBox>Bot</PlayerBox>
           <WeaponGame>

@@ -32,6 +32,7 @@ const Modal: React.FC<ModalProps> = ({ setShowModal }) => {
   const { setUser } = useContext<AppContextType>(GameContext);
   const [userName, setUserName] = useState<PlayerName>(PlayerObj);
   const { name } = userName;
+  const MAX_LENGTH = 8;
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -59,7 +60,9 @@ const Modal: React.FC<ModalProps> = ({ setShowModal }) => {
           </p>
           <CustomLabel>
             <div>Player name:</div>
-            <div>{name.length}/8</div>
+            <div>
+              {name.length}/{MAX_LENGTH}
+            </div>
           </CustomLabel>
           <CustomInput
             onChange={(e) => handleChange(e)}

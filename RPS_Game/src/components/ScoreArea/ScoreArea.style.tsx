@@ -110,7 +110,7 @@ export const ScoreTitle = styled.h2`
   margin-bottom: 15px;
 `;
 
-export const ScoreButton = styled.button`
+export const ScoreButtonStyle = styled.button`
   color: var(--gray);
   line-height: 1;
   background: var(--btn-bg);
