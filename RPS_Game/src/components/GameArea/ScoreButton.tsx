@@ -1,4 +1,4 @@
-import React, { FC, ButtonHTMLAttributes, MouseEventHandler } from "react";
+import { FC, ButtonHTMLAttributes, MouseEventHandler } from "react";
 import { ScoreButtonStyle } from "../ScoreArea/ScoreArea.style";
 
 type ScoreButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {

@@ -1,4 +1,3 @@
-import React from "react";
 import { WeaposContainer, WeaponItem } from "./Weapons.style";
 import CustomIcon from "./CustomIcon";
 import { WeaponsType } from "../GameArea/GameArea";

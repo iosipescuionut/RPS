@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { ScoreTitle } from "../ScoreArea/ScoreArea.style";
 import { GameContext } from "../contexts/GameContext";
 import { LeaderBoardContainer } from "./LeaderBoard.style";

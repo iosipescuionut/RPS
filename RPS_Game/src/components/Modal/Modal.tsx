@@ -1,10 +1,4 @@
-import React, {
-  useEffect,
-  useState,
-  ChangeEvent,
-  useContext,
-  FormEvent,
-} from "react";
+import React, { useState, ChangeEvent, useContext, FormEvent } from "react";
 import {
   ModalCard,
   ModalContainer,
